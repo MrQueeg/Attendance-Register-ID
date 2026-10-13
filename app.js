@@ -188,7 +188,6 @@ function exportCsv() {
   const sorted = [...idRecords, ...manualNameRecords];
 
   const header = ['ID','Manual Name','Arrival Date','Arrival Time','Entry Method'];
-  if (activity.type === 'other') header.push('PCF');
   const rows = [header];
 
   for (const r of sorted) {
@@ -201,11 +200,11 @@ function exportCsv() {
       formatTime(r.arrivedAt),
       isManualName ? 'Manual Name' : r.method
     ];
-    if (activity.type === 'other') row.push(r.pcf ? 'Yes' : 'No');
     rows.push(row);
   }
 
-  const csv = '\uFEFF' + rows.map(row => row.map(csvEscape).join(',')).join('\r\n');
+  // One LF per record, no blank lines, and exactly five import columns.
+  const csv = '\uFEFF' + rows.map(row => row.map(csvEscape).join(',')).join('\n');
   const blob = new Blob([csv], { type:'text/csv;charset=utf-8' });
   const file = new File([blob], `${safeFilename(activity.name)}.csv`, { type:'text/csv' });
   if (navigator.share && navigator.canShare?.({ files:[file] })) navigator.share({ files:[file], title:activity.name }).catch(() => {});
@@ -334,5 +333,5 @@ el('resumeActivity').addEventListener('click', () => { const activity=state.data
 el('closeAndStart').addEventListener('click', () => { const activity=state.data.activities.find(a=>a.id===state.data.lastOpenActivityId); if (activity) activity.closedAt=new Date().toISOString(); state.data.lastOpenActivityId=null; saveData(); el('resumeDialog').close(); el('launchDialog').showModal(); });
 el('viewActivitiesInstead').addEventListener('click', () => { el('resumeDialog').close(); showPastActivities(); });
 window.addEventListener('pagehide', stopCamera);
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js?v=20260810-1', { updateViaCache: 'none' }).catch(console.error);
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js?v=20261014-1', { updateViaCache: 'none' }).catch(console.error);
 startup();

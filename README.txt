@@ -1,4 +1,4 @@
-CADET ATTENDANCE ID WEB APP - VERSION 2.3.2-ID
+CADET ATTENDANCE ID WEB APP - VERSION 2.3.3-ID
 
 PURPOSE
 This is the ID-based Attendance Register. QR codes must contain only a numeric cadet ID, for example: 123456. If a cadet arrives without a QR code and does not know their ID, staff may type the cadet name manually.
@@ -20,11 +20,11 @@ FEATURES
 - CSV export
 - Offline app shell after the first successful online load
 
-CSV FORMAT
+CSV FORMAT (SCANNER IMPORT A:E)
 All CSV files contain:
 ID,Manual Name,Arrival Date,Arrival Time,Entry Method
 
-Other Activities add a final PCF column.
+All activities export exactly the same five columns. PCF is an on-screen checklist for Other Activities only and is never exported.
 
 ID records are exported first in arrival order. Any manually entered names are deliberately moved to the END of the CSV in their own arrival order, with the ID field blank and Entry Method set to Manual Name. This allows staff to identify and resolve them manually.
 
@@ -45,3 +45,9 @@ https://mrqueeg.github.io/Attendance-Register-ID/
 IMPORTANT
 This ID version uses its own localStorage key and does not read or alter the name-based app's attendance records.
 Attendance data is stored locally in the browser on each device. Export required CSV files before deleting activities or clearing website data.
+
+VERSION 2.3.3 FIXES
+- CSV exports exactly five columns for both activity types.
+- PCF remains available on screen for Other Activities but is excluded from CSV.
+- Exactly one newline separates CSV records; no empty spacer rows.
+- Service worker cache and app version updated to load new code.

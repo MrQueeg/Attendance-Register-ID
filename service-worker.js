@@ -1,4 +1,4 @@
-const CACHE = 'cadet-attendance-id-2-3-2';
+const CACHE = 'cadet-attendance-id-2-3-3';
 const CORE = [
   './',
   './index.html',
